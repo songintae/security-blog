@@ -136,6 +136,19 @@ public class PostControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void deleteTest_Unauthorized_Account() throws Exception{
+        // given
+        Post savedPost = createPost();
+
+        // when & then
+        mockMvc.perform(delete("/api/posts/{id}", savedPost.getId())
+                    .with(csrf())
+                    .with(user(new AccountDetails(anotherAuthor))))
+                .andDo(print())
+                .andExpect(status().isForbidden());
+    }
+
     private Post createPost() {
         Post post = new Post();
         post.setTitle("Spring Security");

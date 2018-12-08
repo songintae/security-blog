@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import security.blog.account.Account;
 import security.blog.account.CurrentUser;
@@ -49,6 +50,7 @@ public class PostController {
         return ResponseEntity.ok(post);
     }
 
+    @Secured(value = "ROLE_ADMIN")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         postRepository.deleteById(id);

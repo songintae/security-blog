@@ -1,2 +1,2 @@
-INSERT  INTO ACCOUNT(id,email,password) values (1,'kookooku@woowahan.com', '$2a$10$LwPG4i72xKM6lSbipeg5Q.O9pbxsna0KcmpcFH0j6eOKMmmWKQKF.');
-INSERT  INTO ACCOUNT(id,email,password) values (2,'kookooku@naver.com', '$2a$10$LwPG4i72xKM6lSbipeg5Q.O9pbxsna0KcmpcFH0j6eOKMmmWKQKF.');
+INSERT  INTO ACCOUNT(id,email,password,role) values (1,'kookooku@woowahan.com', '$2a$10$LwPG4i72xKM6lSbipeg5Q.O9pbxsna0KcmpcFH0j6eOKMmmWKQKF.', 'ADMIN');
+INSERT  INTO ACCOUNT(id,email,password,role) values (2,'kookooku@naver.com', '$2a$10$LwPG4i72xKM6lSbipeg5Q.O9pbxsna0KcmpcFH0j6eOKMmmWKQKF.', 'USER');
