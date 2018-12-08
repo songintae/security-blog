@@ -1,0 +1,1 @@
+INSERT  INTO ACCOUNT(id,email,password) values (1,'kookooku@woowahan.com', '$2a$10$LwPG4i72xKM6lSbipeg5Q.O9pbxsna0KcmpcFH0j6eOKMmmWKQKF.');
