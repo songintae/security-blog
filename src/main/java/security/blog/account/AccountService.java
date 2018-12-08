@@ -1,24 +1,21 @@
 package security.blog.account;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class AccountService implements UserDetailsService {
 
-
-    @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     public Account saveAccount(Account account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        account.encodePassword(passwordEncoder);
         return accountRepository.save(account);
     }
 

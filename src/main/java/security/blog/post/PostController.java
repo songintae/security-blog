@@ -1,8 +1,8 @@
 package security.blog.post;
 
 
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,14 +12,12 @@ import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/api/posts", produces = "application/json;charset=UTF-8" )
 public class PostController {
 
-    @Autowired
     private ModelMapper modelMapper;
-
-    @Autowired
     private PostRepository postRepository;
 
     @GetMapping("/{id}")

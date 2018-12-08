@@ -18,4 +18,8 @@ public class Account {
 
     private String email;
     private String password;
+
+    public void encodePassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
+    }
 }
