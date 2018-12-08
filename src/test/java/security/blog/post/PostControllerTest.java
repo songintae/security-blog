@@ -3,6 +3,7 @@ package security.blog.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,12 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import security.blog.account.Account;
+import security.blog.account.AccountDetails;
+import security.blog.account.AccountRepository;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -32,6 +37,18 @@ public class PostControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    private Account author;
+    private Account anotherAuthor;
+
+    @Before
+    public void setUp() {
+        author = accountRepository.findByEmail("kookooku@woowahan.com").get();
+        anotherAuthor = accountRepository.findByEmail("kookooku@naver.com").get();
+    }
 
     @After
     public void tearDown() throws Exception {
@@ -90,6 +107,24 @@ public class PostControllerTest {
     }
 
     @Test
+    public void updateTest_Invalid_Author() throws Exception{
+        // given
+        Post savedPost = createPost();
+        PostDto postDto = new PostDto();
+        postDto.setTitle("Update Title");
+        postDto.setContents("Update Contents");
+
+        // when & then
+        mockMvc.perform(put("/api/posts/{id}", savedPost.getId())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(objectMapper.writeValueAsString(postDto))
+                .with(csrf())
+                .with(user(new AccountDetails(anotherAuthor))))
+                .andDo(print())
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
     public void deleteTest() throws Exception {
         // given
         Post savedPost = createPost();
@@ -105,6 +140,7 @@ public class PostControllerTest {
         Post post = new Post();
         post.setTitle("Spring Security");
         post.setContents("Spring Security Test");
+        post.setAuthor(author);
         return postRepository.save(post);
     }
 }

@@ -19,8 +19,10 @@ public class Post {
     private String contents;
 
     @ManyToOne
-    private Account account;
+    private Account author;
 
 
-
+    public boolean isAuthor(Account account) {
+        return author.equals(account);
+    }
 }
