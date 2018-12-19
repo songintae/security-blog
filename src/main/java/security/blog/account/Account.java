@@ -18,18 +18,18 @@ public class Account {
     private String password;
     @Builder.Default
     @Enumerated(value = EnumType.STRING)
-    private ROLE role = ROLE.USER;
+    private Role role = Role.USER;
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(password);
     }
 
     @Getter
-    public enum ROLE {
+    public enum Role {
         ADMIN("ROLE_ADMIN"), USER("ROLE_USER");
         private String code;
 
-        ROLE(String code) {
+        Role(String code) {
             this.code = code;
         }
     }

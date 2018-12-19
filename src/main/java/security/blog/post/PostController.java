@@ -29,7 +29,6 @@ public class PostController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity create(@CurrentUser Account currentUser, @RequestBody PostDto postDto) {
         Post post = modelMapper.map(postDto, Post.class);
         post.setAuthor(currentUser);
